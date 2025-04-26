@@ -1,12 +1,13 @@
 package com.example.roomsampleapp.repository
 
+import androidx.lifecycle.LiveData
 import com.example.roomsampleapp.data.dao.TodoDao
 import com.example.roomsampleapp.data.entity.Todo
 import kotlinx.coroutines.flow.Flow
 
 class TodoRepositoryImpl(private val todoDao: TodoDao) : TodoRepository {
 
-    override fun loadAll(): Flow<List<Todo>> {
+    override fun loadAll(): LiveData<List<Todo>> {
         return todoDao.selectAll()
     }
 

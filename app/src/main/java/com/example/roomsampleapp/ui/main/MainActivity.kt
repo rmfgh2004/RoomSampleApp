@@ -55,15 +55,10 @@ class MainActivity : AppCompatActivity() {
             recyclerView.addItemDecoration(decoration)
         }
 
-        lifecycleScope.launch {
-            viewModel.todoList
-                .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
-                .collectLatest {
-                    Log.d("askask", it.size.toString())
-                    binding.emptyTextView.isVisible = it.isEmpty()
-                    binding.recyclerView.isVisible = it.isNotEmpty()
-                    adapter.submitList(it)
-                }
+        viewModel.todoList.observe(this) {
+            adapter.submitList(it)
+            binding.emptyTextView.isVisible = it.isEmpty()
+            binding.recyclerView.isVisible = it.isNotEmpty()
         }
     }
 

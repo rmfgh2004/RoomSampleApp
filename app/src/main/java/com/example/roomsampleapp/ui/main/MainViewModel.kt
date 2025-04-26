@@ -1,5 +1,6 @@
 package com.example.roomsampleapp.ui.main
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -16,12 +17,7 @@ class MainViewModel(
     private val todoRepository: TodoRepository
 ) : ViewModel() {
 
-    val todoList = todoRepository.loadAll()
-        .stateIn(
-            initialValue = emptyList(),
-            started = SharingStarted.WhileSubscribed(5000),
-            scope = viewModelScope
-        )
+    val todoList : LiveData<List<Todo>> = todoRepository.loadAll()
 
     fun updateTodo(todo: Todo) {
         viewModelScope.launch(Dispatchers.IO) {
